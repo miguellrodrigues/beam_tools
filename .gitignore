@@ -1,0 +1,43 @@
+# Byte-compiled / optimised
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment variables — NEVER commit real secrets
+.env
+!.env.example
+
+# Frontend build output and dependencies
+beam-web/frontend/dist/
+beam-web/frontend/node_modules/
+
+# Backend cache
+beam-web/backend/__pycache__/
+
+# Smoke test / scratch files
+beam-web/backend/smoke_test.py

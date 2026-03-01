@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "beam-tools"
+version = "0.1.0"
+description = "Symbolic Euler–Bernoulli beam analysis using Macaulay singularity functions and SymPy"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [
+    {name = "Miguel"},
+]
+keywords = [
+    "beam",
+    "structural-analysis",
+    "singularity-functions",
+    "shear-force",
+    "bending-moment",
+    "deflection",
+    "sympy",
+    "engineering",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+    "sympy>=1.12",
+    "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+plot = [
+    "matplotlib>=3.7",
+    "scienceplots>=2.1",
+]
+dev = [
+    "pytest>=7.0",
+    "matplotlib>=3.7",
+    "scienceplots>=2.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/miguel/beam-tools"
+Repository = "https://github.com/miguel/beam-tools"
+Issues = "https://github.com/miguel/beam-tools/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
