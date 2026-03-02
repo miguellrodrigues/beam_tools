@@ -201,7 +201,8 @@ class Load:
 
     def integrate(self):
         self.n += 1.0
-        self.coef /= self.n
+        if self.n > 0:
+            self.coef /= self.n
         return self
 
     def differentiate(self):

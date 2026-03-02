@@ -27,11 +27,12 @@ class SingularityBracket(sp.Piecewise):
             exp = int(expr.exp)
             return "[⟨{}⟩^{}]".format(printer.doprint(base), printer.doprint(exp))
 
+        # Always extract 'a' from the condition (x < a) so the position
+        # is never lost — even when n=0 causes (x-a)^0 to simplify to 1.
         a = cond.args[1] if cond.args[0] == x_symb else cond.args[0]
         x = cond.args[0] if cond.args[0] == x_symb else cond.args[1]
 
         if expr == 1:
-            a = 0
             n = 0
         else:
             n = 1
@@ -51,11 +52,11 @@ class SingularityBracket(sp.Piecewise):
                 printer.doprint(base), printer.doprint(exp)
             )
 
+        # Always extract 'a' from the condition — same fix as _sympystr.
         a = cond.args[1] if cond.args[0] == x_symb else cond.args[0]
         x = cond.args[0] if cond.args[0] == x_symb else cond.args[1]
 
         if expr == 1:
-            a = 0
             n = 0
         else:
             n = 1

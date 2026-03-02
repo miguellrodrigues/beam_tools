@@ -202,7 +202,10 @@ class Beam:
                 continue
             reaction = self.reactions.get(f"{support.name}_Ry")
             if reaction:
-                shear_force += PointLoad(reaction, support.location, LoadOrientation.VERTICAL)
+                load = PointLoad(reaction, support.location, LoadOrientation.VERTICAL)
+                load.n = -1
+                load.integrate()
+                shear_force += load
         return shear_force
 
     def _add_loads_to_shear(self, shear_force):
@@ -216,8 +219,11 @@ class Beam:
                 continue
             if load.load_type in (LoadType.POINT, LoadType.UNIFORM, LoadType.TRIANGULAR):
                 load_copy = load.copy()
-                if load.load_type != LoadType.POINT:
-                    load_copy.integrate()
+                
+                if load.load_type == LoadType.POINT:
+                    load_copy.n = -1
+                    
+                load_copy.integrate()
                 shear_force += load_copy
         return shear_force
 
@@ -310,13 +316,15 @@ class Beam:
                 )
 
                 if load.load_type == LoadType.MOMENT:
-                    moment_arm_sign = (
-                        MomentArm.POSITIVE
-                        if equivalent_load > 0
-                        else MomentArm.NEGATIVE
-                    )
+                    # A pure couple has no moment arm — it enters the
+                    # equilibrium equation directly.  We always place it
+                    # in NegativeMoment so that the equation
+                    #   Pos − Neg = 0  ⟹  Pos − M = 0
+                    # correctly requires the reactions to balance M.
+                    # Using a fixed bucket avoids evaluating the symbolic
+                    # sign (which fails when symbols are positive=True).
                     moment_equations_dict[
-                        moment_arm_map_dict[moment_arm_sign]
+                        EquationEnum.NegativeMoment
                     ] += equivalent_load
                 else:
                     if load.get_orientation() == LoadOrientation.HORIZONTAL:
